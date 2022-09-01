@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: nginx
+  name: nginx-argo
+  namespace: nginx-argo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: nginx-argo
+  template:
+    metadata:
+      labels:
+        run: nginx-argo
+    spec:
+      volumes:
+        - name: webdata
+          emptyDir: {}
+      initContainers:
+        - name: web-content
+          image: busybox
+          volumeMounts:
+            - name: webdata
+              mountPath: "/webdata"
+          command:
+            [
+              "/bin/sh",
+              "-c",
+              'echo "<h1>I love you <font color=blue>Ruangguru</font></h1>" > /webdata/index.html',
+            ]
+      containers:
+        - image: nginx
+          name: nginx
+          volumeMounts:
+            - name: webdata
+              mountPath: "/usr/share/nginx/html"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: nginx
+  name: nginx-deploy-blue-svc
+  namespace: nginx-argo
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    run: nginx-argo
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: whoami
+  namespace: nginx-argo
+  annotations:
+    external-dns.alpha.kubernetes.io/target: "e7ac5e75-7d92-436e-a8b4-f254aeb7c0e4.cfargotunnel.com"
+    external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: nginx-argo.zeinfahrozi.club
+      http:
+        paths:
+          - path: /
+            pathType: Exact
+            backend:
+              service:
+                name: nginx-deploy-blue-svc
+                port:
+                  number: 80

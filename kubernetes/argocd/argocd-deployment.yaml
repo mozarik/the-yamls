@@ -10527,6 +10527,8 @@ metadata:
     app.kubernetes.io/component: server
     app.kubernetes.io/name: argocd-server
     app.kubernetes.io/part-of: argocd
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: who.zeinfahrozi.club
   name: argocd-server
 spec:
   selector:
@@ -10555,6 +10557,7 @@ spec:
       containers:
         - command:
             - argocd-server
+            - --insecure
           env:
             - name: ARGOCD_SERVER_INSECURE
               valueFrom:

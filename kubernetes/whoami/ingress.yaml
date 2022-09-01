@@ -1,35 +1,35 @@
-# apiVersion: networking.k8s.io/v1
-# kind: Ingress
-# metadata:
-#   name: whoami-ing
-#   namespace: default
-#   annotations:
-#     traefik.ingress.kubernetes.io/router.entrypoints: web
-#     # external-dns.alpha.kubernetes.io/target: "who.zeinfahrozi.club"
-#     # external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
-# spec:
-#   rules:
-#     - host: who.zeinfahrozi.club
-#       http:
-#         paths:
-#           - path: /
-#             pathType: Exact
-#             backend:
-#               service:
-#                 name: whoami-1
-#                 port:
-#                   number: 80
-#           - path: /whoami1
-#             pathType: Exact
-#             backend:
-#               service:
-#                 name: whoami-1
-#                 port:
-#                   number: 80
-#           - path: /whoami2
-#             pathType: Exact
-#             backend:
-#               service:
-#                 name: whoami-2
-#                 port:
-#                   number: 80
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: whoami-ing
+  namespace: default
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+    # external-dns.alpha.kubernetes.io/target: "who.zeinfahrozi.club"
+    # external-dns.alpha.kubernetes.io/cloudflare-proxied: "true"
+spec:
+  rules:
+    - host: who.zeinfahrozi.club
+      http:
+        paths:
+          - path: /
+            pathType: Exact
+            backend:
+              service:
+                name: whoami-1
+                port:
+                  number: 80
+          - path: /whoami1
+            pathType: Exact
+            backend:
+              service:
+                name: whoami-1
+                port:
+                  number: 80
+          - path: /whoami2
+            pathType: Exact
+            backend:
+              service:
+                name: whoami-2
+                port:
+                  number: 80

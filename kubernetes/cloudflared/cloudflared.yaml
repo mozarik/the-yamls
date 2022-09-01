@@ -100,6 +100,8 @@ data:
       service: http://10.43.80.91:80
       originRequest:
           noTLSVerify: true
+    - hostname: argocd.zeinfahrozi.club
+      service: https://argocd-server.argocd.svc.cluster.local:443
     - hostname: '*.zeinfahrozi.club'
       service: https://ingress-nginx-controller.default
       originRequest:
