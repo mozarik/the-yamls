@@ -6,7 +6,7 @@ metadata:
   name: nginx-argo
   namespace: nginx-argo
 spec:
-  replicas: 1
+  replicas: 20
   selector:
     matchLabels:
       run: nginx-argo
