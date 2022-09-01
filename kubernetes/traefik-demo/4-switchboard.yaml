@@ -1,0 +1,11 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: switchboard-ingressroute
+spec:
+  routes:
+    - kind: Rule
+      match: Host(`www.switchboard.zeinfahrozi.club`) && PathPrefix(`/nginx`)
+      services:
+        - name: nginx-deploy-main
+          port: 80

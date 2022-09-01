@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: external-dns
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: external-dns
+  template:
+    metadata:
+      labels:
+        app: external-dns
+    spec:
+      containers:
+        - name: external-dns
+          image: k8s.gcr.io/external-dns/external-dns:v0.12.0
+          args:
+            - --source=service # ingress is also possible
+            - --provider=cloudflare
+            - --cloudflare-proxied # (optional) enable the proxy feature of Cloudflare (DDOS protection, CDN...)
+          env:
+            - name: CF_API_TOKEN
+              value: "-murzlI9r5s13dfvjzRy1ynXKo8v-HsRIuvmEx4c"
+            - name: CF_API_EMAIL
+              value: "mzeinfahrozi@gmail.com"

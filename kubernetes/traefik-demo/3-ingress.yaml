@@ -1,0 +1,33 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx-main
+  namespace: default
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+spec:
+  rules:
+    - host: main-3.zeinfahrozi.club
+      http:
+        paths:
+          - path: /
+            pathType: Exact
+            backend:
+              service:
+                name: nginx-deploy-main
+                port:
+                  number: 80
+          - path: /main
+            pathType: Exact
+            backend:
+              service:
+                name: nginx-deploy-main
+                port:
+                  number: 80
+          - path: /blue
+            pathType: Exact
+            backend:
+              service:
+                name: nginx-deploy-blue
+                port:
+                  number: 80

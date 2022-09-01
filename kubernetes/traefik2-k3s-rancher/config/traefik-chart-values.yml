@@ -4,13 +4,13 @@
 additionalArguments:
   - --providers.file.filename=/data/traefik-config.yaml
   - --entrypoints.websecure.http.tls.certresolver=cloudflare
-  - --entrypoints.websecure.http.tls.domains[0].main=example.com
-  - --entrypoints.websecure.http.tls.domains[0].sans=*.example.com
+  - --entrypoints.websecure.http.tls.domains[0].main=zeinfahrozi.club
+  - --entrypoints.websecure.http.tls.domains[0].sans=*.zeinfahrozi.club
   - --certificatesresolvers.cloudflare.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory
   # comment the line above when going to production
   - --certificatesresolvers.cloudflare.acme.dnschallenge.provider=cloudflare
   - --certificatesresolvers.cloudflare.acme.dnschallenge.resolvers=1.1.1.1:53,8.8.8.8:53
-  - --certificatesresolvers.cloudflare.acme.storage=/certs/acme.json
+    --certificatesresolvers.cloudflare.acme.storage=/ssl-certs/acme-cloudflare.json
   - --serversTransport.insecureSkipVerify=true
   # you will need to add an annotation to ingresses you create kubernetes.io/ingress.class traefik-external
   # otherwise it will not servce those requests
@@ -48,18 +48,18 @@ env:
     valueFrom:
       secretKeyRef:
         key: apiKey
-        name: cloudflare-apikey-secret
+        name: cloudflare-credentials
   - name: CF_API_EMAIL
     valueFrom:
       secretKeyRef:
         key: email
-        name: cloudflare-apikey-secret
+        name: cloudflare-credentials
 ingressRoute:
   dashboard:
     enabled: false
 persistence:
   enabled: true
-# make sure this claim is existed
+  # make sure this claim is existed
   existingClaim: acme-json-certs
   accessMode: ReadWriteOnce
   size: 128Mi
@@ -92,14 +92,15 @@ service:
   # type, selector or ports entries.
   spec:
     # externalTrafficPolicy: Cluster
-    loadBalancerIP: "192.168.100.240" # this should be your Metal LB IP
+    loadBalancerIP: "192.168.1.241" # this should be your Metal LB IP
     # clusterIP: "2.3.4.5"
-  loadBalancerSourceRanges: []
+  loadBalancerSourceRanges:
+    []
     # - 192.168.0.1/32
     # - 172.16.0.0/16
-  externalIPs: []
+  externalIPs:
+    []
     # - 1.2.3.4
-    
 # securityContext:
 #   capabilities:
 #     drop: [ALL]

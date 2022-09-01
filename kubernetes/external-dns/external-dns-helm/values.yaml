@@ -1,0 +1,15 @@
+external-dns:
+  provider: cloudflare
+  txtOwnerId: homelab
+  env:
+    - name: CF_API_TOKEN
+      value: "-murzlI9r5s13dfvjzRy1ynXKo8v-HsRIuvmEx4c"
+    - name: CF_API_EMAIL
+      value: "mzeinfahrozi@gmail.com"
+  extraArgs:
+    - --annotation-filter=external-dns.alpha.kubernetes.io/exclude notin (true)
+
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
