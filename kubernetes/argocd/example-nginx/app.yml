@@ -28,7 +28,7 @@ spec:
             [
               "/bin/sh",
               "-c",
-              'echo "<h1>I love you <font color=blue>Ruangguru</font></h1>" > /webdata/index.html',
+              'echo "<h1>Welcome<font color=blue>To My Insecure Cluster</font></h1>" > /webdata/index.html',
             ]
       containers:
         - image: nginx
